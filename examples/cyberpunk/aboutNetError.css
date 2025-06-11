@@ -258,7 +258,7 @@
 #advancedButton {
   background: transparent;
   color: var(--debug-text-dim);
-  border: 1px dashed var(--debug-border);
+  border: 2px dashed var(--debug-border);
   font-size: 0.8rem;
   padding: 0.5rem 1rem;
 }

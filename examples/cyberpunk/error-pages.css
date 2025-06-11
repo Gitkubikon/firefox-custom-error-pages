@@ -236,7 +236,7 @@ p::before {
 button {
   background: linear-gradient(135deg, var(--debug-bg-secondary) 0%, var(--debug-bg-tertiary) 100%);
   color: var(--debug-text);
-  border: 1px solid var(--debug-border);
+  border: 2px solid var(--debug-border);
   border-radius: var(--debug-radius);
   padding: 0.875rem 1.75rem;
   font-family: inherit;
@@ -366,6 +366,7 @@ button[data-telemetry-id]:hover::after {
 
 #advancedButton {
   background: transparent !important;
+  border: 2px dashed var(--debug-border) !important;
   border-style: dashed !important;
   color: var(--debug-text-dim) !important;
   font-size: 0.85rem !important;

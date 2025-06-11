@@ -2,7 +2,7 @@
 
 # Manual apply script - bypasses interactive prompts completely
 
-PROJECT_DIR="$HOME/Projects/shens/zenPages"
+PROJECT_DIR="$HOME/Projects/Gitkubikon/firefox-custom-error-pages"
 ZEN_PATH="/opt/zen-twilight-bin"
 OMNI_FILE="$ZEN_PATH/omni.ja"
 WORK_DIR="/tmp/zen_manual_apply"

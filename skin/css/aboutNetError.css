@@ -1,0 +1,832 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+@import url("chrome://global/skin/error-pages.css");
+
+body {
+  --warning-color: #ff6b35;
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(150, 150, 150, 0.3);
+  --terminal-bg: rgba(0, 0, 0, 0.9);
+  --terminal-green: #00ff41;
+  --terminal-amber: #ffb000;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --warning-color: #ff8c42;
+    --glass-bg: rgba(20, 20, 20, 0.2);
+    --glass-border: rgba(200, 200, 200, 0.2);
+  }
+}
+
+@media (prefers-contrast) {
+  body {
+    --warning-color: var(--in-content-page-color);
+  }
+}
+
+body.certerror {
+  width: 100%;
+}
+
+/* Normally, setting e.g. `display: flex` overrides the hidden attribute.
+ * This allows for element hiding to be controlled entirely in HTML & JS. */
+[hidden] {
+    display: none !important;
+}
+
+body.captiveportal .title {
+  background-image: url("chrome://global/skin/in-content/wifi.svg");
+}
+
+body.certerror .title {
+  background-image: url("chrome://global/skin/icons/warning.svg");
+  fill: var(--warning-color);
+}
+
+body.blocked .title {
+  background-image: url("chrome://global/skin/icons/blocked.svg");
+}
+
+body.clockSkewError .title {
+  background-image: none;
+  background-repeat: no-repeat;
+}
+
+/* Pressing the retry button will cause the cursor to flicker from a pointer to
+ * not-allowed. Override the disabled cursor behaviour since we will never show
+ * the button disabled as the initial state. */
+button:disabled {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+#errorWhatToDoTitle {
+  font-weight: 600;
+  margin-top: 2.5em;
+  font-size: 1.2em;
+  color: var(--warning-color);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: relative;
+  padding-left: 2em;
+  word-wrap: break-word;
+}
+
+#errorWhatToDoTitle::before {
+  content: '►';
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-size: 1.2em;
+}
+
+.debug-panel {
+  background: var(--terminal-bg) !important;
+  border: 3px dotted var(--terminal-green) !important;
+  border-radius: 16px;
+  color: var(--terminal-green);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+  max-width: none;
+  backdrop-filter: blur(20px);
+}
+
+.debug-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--terminal-green), transparent, var(--terminal-green));
+  animation: scan-line 2s infinite;
+}
+
+.panel-header, .console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2em 1.8em;
+  background: rgba(0, 255, 65, 0.1);
+  border-bottom: 2px dotted var(--terminal-green);
+  font-size: 0.8em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.panel-close {
+  background: transparent;
+  border: 2px solid var(--terminal-green);
+  color: var(--terminal-green);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+  line-height: 1;
+  padding: 0;
+}
+
+.panel-close:hover {
+  background: var(--terminal-green);
+  color: var(--terminal-bg);
+  transform: scale(1.1);
+  box-shadow: 0 0 10px var(--terminal-green);
+}
+
+.panel-content, .console-content {
+  padding: 1.5em 2em;
+  overflow: auto;
+  word-wrap: break-word;
+}
+
+.panel-status {
+  color: var(--debug-red);
+  animation: text-flicker 1s infinite;
+}
+
+.debug-console {
+  background: rgba(0, 0, 0, 0.85) !important;
+  border: 3px dotted var(--terminal-amber) !important;
+  color: var(--terminal-amber);
+  border-radius: 16px;
+  backdrop-filter: blur(25px) saturate(180%);
+  opacity: 0.95;
+}
+
+.console-header {
+  background: rgba(255, 176, 0, 0.15);
+  border-bottom: 2px dotted var(--terminal-amber);
+}
+
+.console-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.console-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.console-dot.red { background: var(--debug-red); }
+.console-dot.yellow { background: var(--debug-yellow); }
+.console-dot.green { background: var(--debug-green); }
+
+#advancedPanelButtonContainer {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 2px dotted var(--glass-border);
+  border-radius: 0 0 13px 13px;
+  display: flex;
+  justify-content: end;
+  padding: 1.8em;
+  margin-top: 0;
+  gap: 18px;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+#advancedPanelButtonContainer::before {
+  content: 'ADVANCED OPTIONS';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--glass-bg);
+  color: var(--accent-color);
+  padding: 0 12px;
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+#certErrorAndCaptivePortalButtonContainer {
+  display: flex;
+  gap: 12px;
+}
+
+#netErrorButtonContainer > button {
+  margin-top: 1.2em;
+}
+
+#openPortalLoginPageButton {
+  margin-inline-start: 0;
+}
+
+.advanced-panel-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px) saturate(120%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 2em;
+  box-sizing: border-box;
+}
+
+.advanced-panel-container.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.advanced-panel {
+  margin: 0;
+  min-width: 0;
+  max-width: 90vw;
+  max-height: 85vh;
+  width: 800px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(30px) saturate(180%);
+  opacity: 1;
+  transform: scale(0.8) translateY(50px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: none;
+}
+
+.advanced-panel-container.show .advanced-panel {
+  transform: scale(1) translateY(0);
+}
+
+/* Add close button styling */
+.advanced-panel::before {
+  content: '✕';
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 22px;
+  color: var(--accent-color);
+  cursor: pointer;
+  z-index: 100;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-weight: 400;
+  line-height: 1;
+  border: 1px dotted rgba(255, 255, 255, 0.2);
+}
+
+.advanced-panel::before:hover {
+  background: rgba(255, 7, 58, 0.8);
+  color: white;
+  transform: scale(1.1) rotate(90deg);
+  text-shadow: 0 0 15px currentColor;
+  border-color: var(--debug-red);
+  box-shadow: 0 0 20px rgba(255, 7, 58, 0.4);
+}
+
+/* Enhanced modal backdrop effects */
+.advanced-panel-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 7, 58, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.advanced-panel-container.show::after {
+  opacity: 1;
+}
+
+/* Enhanced panel header styling */
+.advanced-panel .advanced-panel-content::before {
+  content: 'ADVANCED_SECURITY_INFO';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1em 2.5em;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.1));
+  border-bottom: 1px dotted var(--accent-color);
+  font-size: 0.75em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  margin: -3em -2.5em 2em -2.5em;
+  backdrop-filter: blur(10px);
+}
+
+/* Modal animation improvements */
+.advanced-panel-container.show .advanced-panel {
+  animation: modalSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Prevent body scroll when modal is open */
+body:has(.advanced-panel-container.show) {
+  overflow: hidden;
+}
+
+.scrollable-content {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 3em 2.5em 2.5em 2.5em;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color) transparent;
+}
+
+.trr-message-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  border: 2px dotted var(--glass-border);
+  border-radius: 12px;
+  padding: 2em;
+  margin: 1.5em 0;
+  position: relative;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.trr-message-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  animation: scan-line 3s infinite;
+}
+
+#badCertAdvancedPanel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  border: 1px dotted var(--glass-border);
+  border-radius: 12px;
+}
+
+#errorCode {
+  background: var(--terminal-bg);
+  color: var(--terminal-green);
+  border: 2px dotted var(--terminal-green);
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9em;
+  display: inline-block;
+  margin: 0.8em 0;
+  position: relative;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+#errorCode::before {
+  content: 'ERROR_CODE: ';
+  color: var(--terminal-amber);
+  font-weight: 600;
+}
+
+#viewCertificate {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+#viewCertificate:hover {
+  text-shadow: 0 0 10px currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+#badCertTechnicalInfo {
+  margin: 0;
+  padding: 2em;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px dotted var(--terminal-green);
+  border-radius: 8px;
+  color: var(--terminal-green);
+  font-family: inherit;
+  font-size: 0.85em;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow: auto;
+  word-wrap: break-word;
+  max-height: 400px;
+}
+
+#certificateErrorDebugInformation {
+  background: var(--glass-bg) !important;
+  backdrop-filter: blur(15px);
+  border: 1px dotted var(--glass-border) !important;
+  border-radius: 12px;
+  width: 100%;
+  padding: 2em;
+  box-sizing: border-box;
+  margin: 1em 0;
+}
+
+#certificateErrorText {
+  font-family: inherit;
+  background: rgba(0, 0, 0, 0.95);
+  color: var(--terminal-amber);
+  padding: 2em;
+  border-radius: 8px;
+  border: 2px dotted var(--terminal-amber);
+  white-space: pre-wrap;
+  font-size: 0.8em;
+  line-height: 1.5;
+  overflow: auto;
+  position: relative;
+  word-wrap: break-word;
+  max-height: 500px;
+}
+
+#certificateErrorText::before {
+  content: '$ cat certificate_debug.log';
+  display: block;
+  color: var(--terminal-green);
+  margin-bottom: 1em;
+  font-weight: 600;
+  border-bottom: 1px dotted var(--terminal-green);
+  padding-bottom: 0.5em;
+}
+
+#cert_domain_link:not([href]) {
+  color: var(--in-content-page-color);
+  text-decoration: none;
+}
+
+.clockSkewError .try-again {
+  margin-top: 0.3em;
+}
+
+#errorLongDesc strong {
+  font-weight: 500;
+}
+
+#errorShortDesc {
+  font-size: 1.15em;
+  line-height: 1.4;
+  font-weight: 300;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+@media only screen and (max-width: 959px) {
+  .advanced-panel-container {
+    right: -350px;
+    width: 340px;
+  }
+  
+  .advanced-panel-container.show {
+    right: 5px;
+  }
+  
+  .panel-header, .console-header {
+    padding: 1em;
+    font-size: 0.75em;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5em;
+  }
+  
+  .console-controls {
+    margin-left: auto;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .advanced-panel-container {
+    right: -100vw;
+    width: 90vw;
+    max-width: 400px;
+  }
+  
+  .advanced-panel-container.show {
+    right: 5vw;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .advanced-panel-container {
+    position: fixed;
+    top: 0;
+    right: -100vw;
+    width: 100vw;
+    height: 100vh;
+    max-height: none;
+    transform: none;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(25px) saturate(180%);
+  }
+  
+  .advanced-panel-container.show {
+    right: 0;
+  }
+  
+  .advanced-panel {
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    margin: 1em;
+    height: auto;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(30px) saturate(180%);
+  }
+  
+  .debug-panel, .debug-console {
+    border-width: 2px;
+    border-radius: 12px;
+    margin: 1em 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .panel-content, .console-content {
+    padding: 1em;
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  #advancedPanelButtonContainer {
+    padding: 1.2em;
+    gap: 12px;
+    border-radius: 0;
+    margin-top: auto;
+  }
+}
+
+/* Enhanced animations for advanced panels */
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.advanced-panel-container.show .advanced-panel {
+  animation: slideInFromRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Background overlay for the advanced panels */
+.advanced-panel-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.advanced-panel-container.show::before {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* HTTPS-specific fox styling */
+body.certerror .fox-illustration {
+  filter: drop-shadow(0 0 40px rgba(255, 107, 53, 0.2)) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  body.certerror .fox-illustration {
+    filter: drop-shadow(0 0 40px rgba(255, 140, 66, 0.15)) !important;
+  }
+}
+/* Enhanced particle effects for certificate errors */
+body.certerror .particle {
+  background: var(--warning-color) !important;
+  box-shadow: 0 0 15px var(--warning-color) !important;
+}
+
+body.certerror .particle:nth-child(even) {
+  background: var(--terminal-green) !important;
+  box-shadow: 0 0 15px var(--terminal-green) !important;
+}
+
+/* Matrix effect color override for cert errors */
+body.certerror .matrix-canvas {
+  filter: hue-rotate(45deg);
+}
+
+/* Grid background changes for advanced panels */
+.advanced-panel:not([hidden]) ~ .grid-background {
+  animation-duration: 2s;
+  opacity: 0.4;
+}
+
+/* Fox illustration interactions with debug panels */
+.debug-panel:not([hidden]) ~ .fox-container .fox-illustration {
+  filter: drop-shadow(0 4px 20px var(--terminal-green));
+}
+
+.debug-console:not([hidden]) ~ .fox-container .fox-illustration {
+  filter: drop-shadow(0 4px 20px var(--terminal-amber));
+}
+
+/* Enhanced particle speed when panels are active */
+.advanced-panel:not([hidden]) ~ .particles-container .particle {
+  animation-duration: 3s !important;
+  animation-timing-function: ease-in-out !important;
+}
+
+/* Enhanced fire effect when advanced panels are visible */
+.advanced-panel:not([hidden]) ~ .fire-effect .fire-bubble {
+  animation-duration: 2.5s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.advanced-panel:not([hidden]) ~ .fire-effect .fire-bubble:nth-child(even) {
+  background: radial-gradient(circle, var(--terminal-green), var(--accent-color)) !important;
+}
+
+/* Custom scrollbar for modal content */
+.advanced-panel-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.advanced-panel-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.advanced-panel-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-color), rgba(0, 217, 255, 0.6));
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.advanced-panel-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-color), var(--accent-glow));
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* Enhanced modal animations */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateY(100px) rotateX(15deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes modalSlideOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotateX(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.7) translateY(100px) rotateX(15deg);
+  }
+}
+
+.advanced-panel-container.show .advanced-panel {
+  animation: modalSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Modal backdrop click handler */
+.advanced-panel-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: -1;
+}
+
+/* Enhanced fox background interaction with modal */
+.advanced-panel-container.show ~ body::before {
+  opacity: 0.08;
+  filter: contrast(1.5) brightness(1.3) hue-rotate(20deg);
+  transition: all 0.4s ease;
+}
+
+/* Responsive modal design */
+@media only screen and (max-width: 959px) {
+  .advanced-panel {
+    width: 95vw;
+    max-width: 95vw;
+  }
+  
+  .advanced-panel-content {
+    padding: 2.5em 1.5em 2em 1.5em;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .advanced-panel-container {
+    padding: 1em;
+  }
+  
+  .advanced-panel {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 16px;
+    max-height: 90vh;
+  }
+  
+  .advanced-panel-content {
+    padding: 2em 1em 1.5em 1em;
+    max-height: 80vh;
+  }
+  
+  .advanced-panel::before {
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media only screen and (max-height: 600px) {
+  .advanced-panel {
+    max-height: 95vh;
+  }
+  
+  .advanced-panel-content {
+    max-height: 85vh;
+    padding: 1.5em 2em 1.5em 2em;
+  }
+}
+
+/* Enhanced debug panels in modal */
+.advanced-panel-container .debug-panel {
+  margin: 1.5em 0;
+  background: rgba(0, 0, 0, 0.95) !important;
+  border-color: var(--terminal-green) !important;
+}
+
+.advanced-panel-container #certificateErrorText {
+  max-height: 300px;
+  background: rgba(0, 0, 0, 0.98);
+}
+
+.advanced-panel-container #badCertTechnicalInfo {
+  max-height: 250px;
+  background: rgba(0, 0, 0, 0.98);
+}

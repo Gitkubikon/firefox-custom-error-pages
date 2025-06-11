@@ -1,0 +1,310 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+.title > h2 {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.9;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--debug-red);
+  font-family: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+.title {
+  background-image: url("chrome://global/content/httpsonlyerror/secure-broken.svg");
+  background-size: 56px !important;
+  padding: 2em 0 2em 72px !important;
+  border-bottom: 1px dotted var(--border-glow);
+  margin-bottom: 2em;
+  position: relative;
+}
+
+.title::before {
+  content: 'SECURITY_VIOLATION';
+  position: absolute;
+  top: 0;
+  left: 72px;
+  font-size: 0.7em;
+  color: var(--debug-red);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  animation: text-flicker 2s infinite;
+}
+
+em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--debug-red);
+  background: rgba(255, 7, 58, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px dotted var(--debug-red);
+}
+
+#insecure-explanation-unavailable {
+  margin-bottom: 1em;
+  line-height: 1.6;
+  font-weight: 400;
+  background: var(--glass-secondary);
+  padding: 1.5em;
+  border-radius: 10px;
+  border: 1px dotted var(--border-glow);
+  position: relative;
+}
+
+#insecure-explanation-unavailable::before {
+  content: 'THREAT_ANALYSIS';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--glass-primary);
+  color: var(--debug-red);
+  padding: 0 12px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+#learn-more-container {
+  margin-block: 0 2em;
+}
+
+#learn-more-container a {
+  color: var(--accent-color);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+#learn-more-container a:hover {
+  text-shadow: 0 0 10px currentColor;
+  border-bottom: 1px solid currentColor;
+}
+
+#explanation-continue {
+  margin-block: 2.5em;
+  padding: 2em;
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.12), rgba(255, 193, 7, 0.06));
+  border: 1px dotted rgba(255, 193, 7, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  position: relative;
+  overflow: hidden;
+}
+
+#explanation-continue::before {
+  content: 'PROCEED_WITH_CAUTION';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--glass-primary);
+  color: var(--debug-yellow);
+  padding: 0 12px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+#explanation-continue::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--debug-yellow), transparent);
+  animation: scan-line 4s infinite;
+}
+
+ul {
+  padding: 2em;
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.04));
+  border: 1px dotted rgba(220, 53, 69, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(15px);
+  position: relative;
+  margin: 2em 0;
+}
+
+ul::before {
+  content: 'SECURITY_RISKS';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--glass-primary);
+  color: var(--debug-red);
+  padding: 0 12px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+ul > li {
+  line-height: 1.7;
+  margin-bottom: 1em;
+  font-weight: 400;
+  position: relative;
+  padding-left: 1.5em;
+}
+
+ul > li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--debug-red);
+  font-weight: 600;
+}
+
+.suggestion-box {
+  position: absolute;
+  margin-top: 3em;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.12), rgba(0, 217, 255, 0.06));
+  border: 1px dotted var(--accent-color);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  background-image: url("chrome://global/skin/icons/lightbulb.svg");
+  background-size: 56px;
+  background-repeat: no-repeat;
+  background-position: 1.5em center;
+  -moz-context-properties: fill;
+  fill: var(--accent-color);
+  margin-inline-start: -6em;
+  padding: 2em 2em 2em 5.5em;
+  animation: fade-in 300ms ease-out;
+  box-shadow: 
+    0 12px 40px rgba(0, 217, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.suggestion-box::before {
+  content: 'SUGGESTION';
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: var(--glass-primary);
+  color: var(--accent-color);
+  padding: 0 12px;
+  font-size: 0.7em;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.suggestion-box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+  animation: scan-line 3s infinite;
+}
+
+.suggestion-box > h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-color);
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* HTTPS-specific fox styling */
+.fox-illustration {
+  filter: drop-shadow(0 0 40px rgba(255, 7, 58, 0.2)) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .fox-illustration {
+    filter: drop-shadow(0 0 40px rgba(255, 107, 107, 0.15)) !important;
+  }
+}
+
+/* Grid background for security warnings */
+.grid-background {
+  background-image: 
+    linear-gradient(rgba(255, 7, 58, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 7, 58, 0.15) 1px, transparent 1px) !important;
+}
+
+/* Enhanced effects when security warning is active */
+#explanation-continue:not([hidden]) ~ .particles-container .particle {
+  animation-duration: 2s !important;
+  opacity: 0.8 !important;
+}
+
+/* Enhanced fire when security warning is active */
+#explanation-continue:not([hidden]) ~ .fire-effect .fire-bubble {
+  animation-duration: 2s;
+  opacity: 0.8;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px dotted rgba(200, 200, 200, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  em {
+    color: #ff6b6b;
+  }
+  
+  #explanation-continue {
+    background: rgba(255, 193, 7, 0.08);
+    border: 1px dotted rgba(255, 193, 7, 0.25);
+  }
+  
+  ul {
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px dotted rgba(220, 53, 69, 0.2);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background: rgba(20, 20, 20, 0.7);
+    border: 1px dotted rgba(200, 200, 200, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+  
+  em {
+    color: #ff6b6b;
+  }
+  
+  #explanation-continue {
+    background: rgba(255, 193, 7, 0.08);
+    border: 1px dotted rgba(255, 193, 7, 0.25);
+  }
+  
+  ul {
+    background: rgba(220, 53, 69, 0.08);
+    border: 1px dotted rgba(220, 53, 69, 0.2);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

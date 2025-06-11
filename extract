@@ -3,7 +3,7 @@
 # Configuration
 ZEN_PATH="/opt/zen-twilight-bin"
 OMNI_FILE="$ZEN_PATH/omni.ja"
-PROJECT_DIR="$HOME/Projects/shens/zenPages"
+PROJECT_DIR="$HOME/Projects/Gitkubikon/firefox-custom-error-pages"
 BACKUP_DIR="$PROJECT_DIR/backups"
 
 # Colors

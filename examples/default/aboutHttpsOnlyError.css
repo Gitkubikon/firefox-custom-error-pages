@@ -87,9 +87,28 @@ ul > li {
   }
 }
 
-/* We need this extra class instead of just adding a "disabled" attribute to the
- * button, as we still need to receive JS events from it. */
-button.disabled {
-  opacity: var(--button-opacity-disabled);
-  color: var(--button-text-color-disabled);
+/* Add fox background to HTTPS-only error pages */
+body::before {
+  content: '';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  background-image: url("chrome://global/skin/illustrations/fox.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.04;
+  z-index: -2;
+  pointer-events: none;
+  filter: contrast(1.1) brightness(1.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  body::before {
+    opacity: 0.08;
+    filter: contrast(1.2) brightness(1.1) invert(0.1) hue-rotate(15deg);
+  }
 }
