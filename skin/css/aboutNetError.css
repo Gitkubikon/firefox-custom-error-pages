@@ -234,15 +234,15 @@ button:disabled {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(20px) saturate(120%);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(25px) saturate(120%);
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 2em;
   box-sizing: border-box;
 }
@@ -250,6 +250,7 @@ button:disabled {
 .advanced-panel-container.show {
   opacity: 1;
   visibility: visible;
+  animation: backdropFade 0.3s ease-out forwards;
 }
 
 .advanced-panel {
@@ -262,56 +263,56 @@ button:disabled {
   position: relative;
   overflow: hidden;
   box-shadow: 
-    0 30px 80px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 25px 80px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.9) !important;
-  backdrop-filter: blur(30px) saturate(180%);
-  opacity: 1;
-  transform: scale(0.8) translateY(50px);
+  border-radius: 24px;
+  background: linear-gradient(135deg, 
+    rgba(0, 0, 0, 0.95) 0%, 
+    rgba(20, 20, 20, 0.9) 100%) !important;
+  backdrop-filter: blur(40px) saturate(180%);
+  opacity: 0;
+  transform: scale(0.9) translateY(40px);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: none;
 }
 
 .advanced-panel-container.show .advanced-panel {
   transform: scale(1) translateY(0);
 }
 
-/* Add close button styling */
+/* Polished close button */
 .advanced-panel::before {
   content: '✕';
   position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 22px;
-  color: var(--accent-color);
+  top: 20px;
+  right: 24px;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   z-index: 100;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  font-weight: 400;
+  transition: all 0.25s ease;
+  font-weight: 300;
   line-height: 1;
-  border: 1px dotted rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .advanced-panel::before:hover {
-  background: rgba(255, 7, 58, 0.8);
-  color: white;
-  transform: scale(1.1) rotate(90deg);
-  text-shadow: 0 0 15px currentColor;
-  border-color: var(--debug-red);
-  box-shadow: 0 0 20px rgba(255, 7, 58, 0.4);
+  background: rgba(255, 59, 48, 0.15);
+  color: #ff3b30;
+  transform: scale(1.05);
+  border-color: rgba(255, 59, 48, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2);
 }
 
-/* Enhanced modal backdrop effects */
+/* Refined modal backdrop effects */
 .advanced-panel-container::after {
   content: '';
   position: absolute;
@@ -320,8 +321,8 @@ button:disabled {
   width: 100%;
   height: 100%;
   background: 
-    radial-gradient(circle at 30% 20%, rgba(0, 217, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 70% 80%, rgba(255, 7, 58, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 25% 25%, rgba(0, 217, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0, 150, 255, 0.06) 0%, transparent 50%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
@@ -332,23 +333,24 @@ button:disabled {
   opacity: 1;
 }
 
-/* Enhanced panel header styling */
+/* Refined panel header styling */
 .advanced-panel .advanced-panel-content::before {
-  content: 'ADVANCED_SECURITY_INFO';
+  content: 'Security Information';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding: 1em 2.5em;
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 217, 255, 0.1));
-  border-bottom: 1px dotted var(--accent-color);
-  font-size: 0.75em;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent-color);
-  margin: -3em -2.5em 2em -2.5em;
-  backdrop-filter: blur(10px);
+  padding: 1.5em 2.5em;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.08) 0%, 
+    rgba(255, 255, 255, 0.04) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.9em;
+  font-weight: 500;
+  letter-spacing: 0.025em;
+  color: rgba(255, 255, 255, 0.9);
+  margin: -3em -2.5em 2.5em -2.5em;
+  backdrop-filter: blur(15px);
 }
 
 /* Modal animation improvements */
@@ -698,52 +700,65 @@ body.certerror .matrix-canvas {
   background: radial-gradient(circle, var(--terminal-green), var(--accent-color)) !important;
 }
 
-/* Custom scrollbar for modal content */
+/* Refined custom scrollbar */
 .advanced-panel-content::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .advanced-panel-content::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 .advanced-panel-content::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent-color), rgba(0, 217, 255, 0.6));
-  border-radius: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  transition: background 0.2s ease;
 }
 
 .advanced-panel-content::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--accent-color), var(--accent-glow));
-  box-shadow: 0 0 10px var(--accent-glow);
+  background: rgba(255, 255, 255, 0.5);
 }
 
-/* Enhanced modal animations */
-@keyframes modalSlideIn {
-  from {
+/* Polished modal animations */
+@keyframes modalEntrance {
+  0% {
     opacity: 0;
-    transform: scale(0.7) translateY(100px) rotateX(15deg);
+    transform: scale(0.85) translateY(60px);
+    filter: blur(4px);
   }
-  to {
+  50% {
+    opacity: 0.8;
+    transform: scale(0.95) translateY(20px);
+    filter: blur(1px);
+  }
+  100% {
     opacity: 1;
-    transform: scale(1) translateY(0) rotateX(0deg);
+    transform: scale(1) translateY(0);
+    filter: blur(0);
   }
 }
 
-@keyframes modalSlideOut {
-  from {
+@keyframes modalExit {
+  0% {
     opacity: 1;
-    transform: scale(1) translateY(0) rotateX(0deg);
+    transform: scale(1) translateY(0);
+    filter: blur(0);
   }
-  to {
+  100% {
     opacity: 0;
-    transform: scale(0.7) translateY(100px) rotateX(15deg);
+    transform: scale(0.9) translateY(40px);
+    filter: blur(3px);
   }
+}
+
+@keyframes backdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .advanced-panel-container.show .advanced-panel {
-  animation: modalSlideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  animation: modalEntrance 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 /* Modal backdrop click handler */
@@ -765,7 +780,7 @@ body.certerror .matrix-canvas {
   transition: all 0.4s ease;
 }
 
-/* Responsive modal design */
+/* Polished responsive modal design */
 @media only screen and (max-width: 959px) {
   .advanced-panel {
     width: 95vw;
@@ -773,7 +788,7 @@ body.certerror .matrix-canvas {
   }
   
   .advanced-panel-content {
-    padding: 2.5em 1.5em 2em 1.5em;
+    padding: 3em 2em 2em 2em;
   }
 }
 
@@ -785,21 +800,27 @@ body.certerror .matrix-canvas {
   .advanced-panel {
     width: 100%;
     max-width: 100%;
-    border-radius: 16px;
+    border-radius: 20px;
     max-height: 90vh;
   }
   
   .advanced-panel-content {
-    padding: 2em 1em 1.5em 1em;
+    padding: 3em 1.5em 2em 1.5em;
     max-height: 80vh;
   }
   
   .advanced-panel::before {
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    width: 35px;
-    height: 35px;
+    top: 16px;
+    right: 20px;
+    font-size: 16px;
+    width: 32px;
+    height: 32px;
+  }
+  
+  .advanced-panel .advanced-panel-content::before {
+    padding: 1.2em 1.5em;
+    margin: -3em -1.5em 2em -1.5em;
+    font-size: 0.85em;
   }
 }
 
@@ -810,7 +831,7 @@ body.certerror .matrix-canvas {
   
   .advanced-panel-content {
     max-height: 85vh;
-    padding: 1.5em 2em 1.5em 2em;
+    padding: 2.5em 2em 1.5em 2em;
   }
 }
 
@@ -829,4 +850,13 @@ body.certerror .matrix-canvas {
 .advanced-panel-container #badCertTechnicalInfo {
   max-height: 250px;
   background: rgba(0, 0, 0, 0.98);
+}
+
+/* Polished scrollable content area */
+.advanced-panel-content {
+  max-height: 75vh;
+  overflow-y: auto;
+  padding: 3.5em 2.5em 2.5em 2.5em;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
 }

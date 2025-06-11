@@ -46,23 +46,24 @@ body {
   max-width: 100vw;
 }
 
-/* Add fox background to the entire page */
+/* Refined fox background */
 body::before {
   content: '';
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60vw;
-  height: 60vh;
+  width: 55vw;
+  height: 55vh;
   background-image: url("chrome://global/skin/illustrations/fox.svg");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.03;
+  opacity: 0.04;
   z-index: -2;
   pointer-events: none;
-  filter: contrast(1.2) brightness(1.1);
+  filter: contrast(1.1) brightness(1.05) saturate(0.9);
+  transition: opacity 0.3s ease;
 }
 
 .debug-overlay {
@@ -106,21 +107,21 @@ body::before {
   
   /* Enhanced fox background for dark mode */
   body::before {
-    opacity: 0.06;
-    filter: contrast(1.3) brightness(1.2) invert(0.1) hue-rotate(10deg);
+    opacity: 0.07;
+    filter: contrast(1.2) brightness(1.1) invert(0.08) hue-rotate(8deg) saturate(0.8);
   }
 }
 
 .container {
   background: var(--glass-primary);
-  backdrop-filter: blur(20px) saturate(180%);
-  border: var(--dotted-border);
-  border-radius: 16px;
+  backdrop-filter: blur(25px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
   padding: 0;
   margin: 2em auto;
   max-width: 900px;
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 10px 40px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: visible;
@@ -233,40 +234,46 @@ body {
 }
 
 button {
-  background: var(--glass-primary) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(15px) !important;
-  border: var(--dotted-border) !important;
-  border-radius: 10px !important;
-  padding: 16px 32px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 12px !important;
+  padding: 14px 28px !important;
   font-weight: 500 !important;
   font-family: inherit !important;
   font-size: 0.9em !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition: all 0.25s ease !important;
   color: inherit !important;
   position: relative !important;
   overflow: hidden !important;
   white-space: nowrap !important;
   text-overflow: ellipsis !important;
   min-height: 44px !important;
+  cursor: pointer !important;
 }
 
 button:hover {
-  background: var(--glass-primary) !important;
-  border: 1px dotted var(--accent-color) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 217, 255, 0.2);
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 button.primary {
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(0, 217, 255, 0.08)) !important;
-  border: 2px dotted var(--accent-color) !important;
-  color: var(--accent-color) !important;
-  box-shadow: 0 0 20px rgba(0, 217, 255, 0.1);
+  background: linear-gradient(135deg, 
+    rgba(0, 150, 255, 0.15) 0%, 
+    rgba(0, 120, 255, 0.1) 100%) !important;
+  border: 1px solid rgba(0, 150, 255, 0.4) !important;
+  color: #0096ff !important;
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.1);
 }
 
 button.primary:hover {
-  background: linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(0, 217, 255, 0.15)) !important;
-  box-shadow: 0 8px 30px rgba(0, 217, 255, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(0, 150, 255, 0.25) 0%, 
+    rgba(0, 120, 255, 0.15) 100%) !important;
+  border-color: rgba(0, 150, 255, 0.6) !important;
+  box-shadow: 0 6px 25px rgba(0, 150, 255, 0.2);
 }
 
 /* Fox illustration styling - centered at bottom, large and transparent */
