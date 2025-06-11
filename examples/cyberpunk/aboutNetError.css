@@ -1,0 +1,426 @@
+/* ========================================
+   ZEN BROWSER - REFINED NETWORK ERROR DEBUG THEME
+   ======================================== */
+
+@import url('error-pages.css');
+
+/* Network-specific refined overrides */
+:root {
+  --net-error-primary: #ff6b35;
+  --net-error-secondary: #ff8c69;
+  --net-error-dim: #e55a2b;
+  --net-error-bg: rgba(255, 107, 53, 0.08);
+  --net-error-glow: rgba(255, 107, 53, 0.25);
+}
+
+/* Enhanced network error container */
+#text-container {
+  position: relative;
+  padding: 2.5rem;
+  border: 1px solid var(--net-error-primary);
+  border-radius: var(--debug-radius);
+  background: linear-gradient(135deg, 
+    var(--net-error-bg) 0%, 
+    rgba(255, 107, 53, 0.12) 100%);
+  margin: 2rem 0;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(255, 107, 53, 0.15);
+  transition: var(--debug-transition);
+}
+
+#text-container:hover {
+  border-color: var(--net-error-secondary);
+  box-shadow: 0 12px 40px rgba(255, 107, 53, 0.2);
+}
+
+#text-container::before {
+  content: '[NETWORK_ERROR_DETECTED]';
+  position: absolute;
+  top: -10px;
+  left: 2rem;
+  background: var(--debug-bg-primary);
+  color: var(--net-error-primary);
+  padding: 0.25rem 1rem;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  border-radius: var(--debug-radius-small);
+  border: 1px solid var(--net-error-primary);
+  animation: error-pulse 2s ease-in-out infinite;
+}
+
+@keyframes error-pulse {
+  0%, 70% { 
+    color: var(--net-error-primary);
+    border-color: var(--net-error-primary);
+  }
+  35% { 
+    color: var(--net-error-secondary);
+    border-color: var(--net-error-secondary);
+    text-shadow: 0 0 8px var(--net-error-glow);
+  }
+}
+
+/* Enhanced error title styling */
+.title h1, .title-text {
+  color: var(--net-error-primary);
+  text-shadow: 0 0 16px var(--net-error-glow);
+  font-size: 2.2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: var(--debug-transition);
+}
+
+.title h1:hover, .title-text:hover {
+  color: var(--net-error-secondary);
+  text-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+}
+
+.title h1::before, .title-text::before {
+  content: '[NET_ERR] ';
+  color: var(--debug-error);
+  font-size: 0.5em;
+  animation: status-blink 2s ease-in-out infinite;
+}
+
+@keyframes status-blink {
+  0%, 60% { opacity: 1; }
+  30% { opacity: 0.6; }
+}
+
+/* Refined error description styling */
+#errorShortDesc, #errorShortDesc2 {
+  background: linear-gradient(135deg, 
+    var(--debug-bg-secondary) 0%, 
+    var(--debug-bg-tertiary) 100%);
+  border-left: 4px solid var(--net-error-primary);
+  border-radius: 0 var(--debug-radius) var(--debug-radius) 0;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  font-family: inherit;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: var(--debug-transition);
+}
+
+#errorShortDesc:hover, #errorShortDesc2:hover {
+  border-left-color: var(--net-error-secondary);
+  background: linear-gradient(135deg, 
+    var(--debug-bg-tertiary) 0%, 
+    rgba(255, 107, 53, 0.05) 100%);
+}
+
+#errorShortDesc::before {
+  content: '[PRIMARY_ERROR]';
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  background: var(--debug-bg-primary);
+  color: var(--net-error-primary);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: var(--debug-radius-small);
+  border: 1px solid var(--net-error-primary);
+}
+
+#errorShortDesc2::before {
+  content: '[SECONDARY_INFO]';
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  background: var(--debug-bg-primary);
+  color: var(--debug-warning);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: var(--debug-radius-small);
+  border: 1px solid var(--debug-warning);
+}
+
+/* What to do section */
+#errorWhatToDo {
+  background: linear-gradient(135deg, 
+    rgba(255, 170, 0, 0.05) 0%, 
+    rgba(255, 170, 0, 0.12) 100%);
+  border: 1px solid var(--debug-warning);
+  border-radius: var(--debug-radius);
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+  backdrop-filter: blur(4px);
+}
+
+#errorWhatToDoTitle {
+  color: var(--debug-warning) !important;
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 1rem !important;
+}
+
+#errorWhatToDoTitle::before {
+  content: '[ACTIONS] ';
+  color: var(--net-error-primary);
+  font-size: 0.7em;
+}
+
+/* Long description */
+#errorLongDesc {
+  background: rgba(17, 17, 17, 0.8);
+  border: 1px solid var(--debug-border);
+  border-radius: 0;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+#errorLongDesc::before {
+  content: '[TECHNICAL_DETAILS]';
+  position: absolute;
+  top: -10px;
+  left: 1rem;
+  background: var(--debug-bg-primary);
+  color: var(--debug-accent);
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+/* TRR and DNS fallback containers */
+#trrOnlyContainer, #nativeFallbackContainer {
+  background: var(--debug-bg-secondary);
+  border: 2px dashed var(--debug-warning);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+#trrOnlyContainer::before {
+  content: '[DNS_RESOLVER_INFO]';
+  position: absolute;
+  top: -12px;
+  left: 1rem;
+  background: var(--debug-bg-primary);
+  color: var(--debug-warning);
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+#nativeFallbackContainer::before {
+  content: '[FALLBACK_AVAILABLE]';
+  position: absolute;
+  top: -12px;
+  left: 1rem;
+  background: var(--debug-bg-primary);
+  color: var(--debug-accent);
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.trr-message-container {
+  border-left: 3px solid var(--debug-accent);
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+
+/* Learn more links */
+#learnMoreContainer {
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1rem;
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px dashed var(--debug-accent);
+}
+
+#learnMoreLink {
+  color: var(--debug-accent);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+#learnMoreLink:hover {
+  border-color: var(--debug-accent);
+  background: var(--debug-accent);
+  color: var(--debug-bg-primary);
+  box-shadow: 0 0 15px var(--debug-shadow);
+}
+
+/* Advanced button styling */
+#advancedButton {
+  background: transparent;
+  color: var(--debug-text-dim);
+  border: 1px dashed var(--debug-border);
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+}
+
+#advancedButton:hover {
+  background: var(--debug-bg-secondary);
+  color: var(--debug-accent);
+  border-color: var(--debug-accent);
+}
+
+#advancedButton::after {
+  content: ' [SHOW_DEBUG]';
+  font-size: 0.7em;
+  color: var(--debug-accent-dim);
+}
+
+/* Try again button special styling */
+.try-again {
+  background: var(--debug-warning) !important;
+  color: var(--debug-bg-primary) !important;
+  border-color: var(--debug-warning) !important;
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 170, 0, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 170, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 170, 0, 0); }
+}
+
+/* Certificate error panels */
+#badCertAdvancedPanel {
+  background: var(--debug-bg-secondary);
+  border: 2px solid var(--debug-error);
+  padding: 2rem;
+  margin: 2rem 0;
+  position: relative;
+}
+
+#badCertAdvancedPanel::before {
+  content: '[CERTIFICATE_DEBUG_INFO]';
+  position: absolute;
+  top: -12px;
+  left: 2rem;
+  background: var(--debug-bg-primary);
+  color: var(--debug-error);
+  padding: 0 0.8rem;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+#badCertTechnicalInfo {
+  background: var(--debug-bg-primary);
+  border: 1px solid var(--debug-error);
+  color: var(--debug-error);
+  font-family: 'Courier New', monospace;
+  padding: 1rem;
+  margin: 1rem 0;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}
+
+#viewCertificate {
+  color: var(--debug-accent);
+  border: 1px dashed var(--debug-accent);
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  margin: 1rem 0;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+#viewCertificate:hover {
+  background: var(--debug-accent);
+  color: var(--debug-bg-primary);
+  border-style: solid;
+}
+
+/* Error reporting section */
+#blockingErrorReporting {
+  background: rgba(0, 255, 65, 0.05);
+  border: 1px dashed var(--debug-accent);
+  padding: 1.5rem;
+}
+
+.toggle-container-with-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Certificate debug information */
+#certificateErrorDebugInformation {
+  background: var(--debug-bg-primary);
+  border: 2px solid var(--debug-accent);
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+#certificateErrorText {
+  background: var(--debug-bg-secondary);
+  border: 1px solid var(--debug-border);
+  color: var(--debug-text-dim);
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  padding: 1rem;
+  margin: 1rem 0;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+/* Copy buttons */
+#copyToClipboardTop, #copyToClipboardBottom {
+  background: var(--debug-accent);
+  color: var(--debug-bg-primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0.5rem 0;
+}
+
+#copyToClipboardTop:hover, #copyToClipboardBottom:hover {
+  background: var(--debug-accent-dim);
+  box-shadow: 0 0 10px var(--debug-shadow);
+}
+
+/* Special status indicators */
+#tlsVersionNotice {
+  background: rgba(255, 170, 0, 0.1);
+  border: 1px solid var(--debug-warning);
+  padding: 1rem;
+  color: var(--debug-warning);
+  font-weight: bold;
+}
+
+#tlsVersionNotice::before {
+  content: '[TLS_VERSION_WARNING] ';
+  color: var(--debug-error);
+  font-size: 0.8em;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  #text-container,
+  #badCertAdvancedPanel,
+  #certificateErrorDebugInformation {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+  
+  .title h1, .title-text {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+  
+  #certificateErrorText {
+    font-size: 0.6rem;
+    max-height: 200px;
+  }
+}
